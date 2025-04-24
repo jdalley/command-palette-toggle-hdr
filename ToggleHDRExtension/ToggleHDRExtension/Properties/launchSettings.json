@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "ToggleHDRExtension (Package)": {
+      "commandName": "MsixPackage",
+      "doNotLaunchApp": true,
+      "nativeDebugging": true
+    },
+    "ToggleHDRExtension (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
