@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using ToggleHDRExtension.Models;
-using ToggleHDRExtension.Win32;
+using ToggleHDRExtension.Interop;
 
 namespace ToggleHDRExtension;
 
