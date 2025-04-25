@@ -1,13 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using ToggleHDRExtension.Models;
-using ToggleHDRExtension.Interop;
 
-namespace ToggleHDRExtension;
+namespace ToggleHDRExtension.Interop;
 
+/// <summary>
+/// Getting and setting HDR state for displays.
+/// </summary>
 internal static class HDRController
 {
+    /// <summary>
+    /// Set the HDR state for a specific display by its index.
+    /// </summary>
+    /// <param name="displayIndex"></param>
+    /// <param name="enable">HDR State - On(true)/Off(false)</param>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="Exception"></exception>
     internal static void SetHDRStateForDisplay(int displayIndex, bool enable)
     {
         var displays = GetDisplays();
@@ -30,7 +41,7 @@ internal static class HDRController
             header = new DISPLAYCONFIG_DEVICE_INFO_HEADER
             {
                 type = DisplayConfigConstants.DISPLAYCONFIG_DEVICE_INFO_SET_ADVANCED_COLOR_STATE,
-                size = (uint)Marshal.SizeOf(typeof(DISPLAYCONFIG_SET_ADVANCED_COLOR_STATE)),
+                size = (uint)Marshal.SizeOf<DISPLAYCONFIG_SET_ADVANCED_COLOR_STATE>(),
                 adapterId = display.AdapterId,
                 id = display.DisplayId
             },
@@ -40,19 +51,23 @@ internal static class HDRController
         int result = DisplayConfig.DisplayConfigSetDeviceInfo(ref setAdvancedColorState);
         if (result != DisplayConfigConstants.ERROR_SUCCESS)
         {
-            throw new Exception($"Failed to set HDR state for display {displayIndex}. Error code: {result}");
+            throw new InvalidOperationException($"Failed to set HDR state for display {displayIndex}. Error code: {result}");
         }
     }
 
+    /// <summary>
+    /// Get a list of Displays/Monitors connected to this computer, including information on whether they 
+    /// support HDR, and whether it's currently enabled.
+    /// </summary>
+    /// <returns><see cref="List{DisplayInfo}"/></returns>
+    /// <exception cref="Exception"></exception>
     internal static List<DisplayInfo> GetDisplays()
     {
         // Get necessary buffer sizes for the display configuration
-        uint pathCount = 0;
-        uint modeCount = 0;
-        int result = DisplayConfig.GetDisplayConfigBufferSizes(QDC.ONLY_ACTIVE_PATHS, out pathCount, out modeCount);
+        int result = DisplayConfig.GetDisplayConfigBufferSizes(QDC.ONLY_ACTIVE_PATHS, out uint pathCount, out uint modeCount);
         if (result != DisplayConfigConstants.ERROR_SUCCESS)
         {
-            throw new Exception($"Failed to get display config buffer sizes. Error code: {result}");
+            throw new InvalidOperationException($"Failed to get display config buffer sizes. Error code: {result}");
         }
 
         // Query the display configuration
@@ -64,11 +79,11 @@ internal static class HDRController
             pathInfoArray,
             ref modeCount,
             modeInfoArray,
-            IntPtr.Zero);
+            nint.Zero);
 
         if (result != DisplayConfigConstants.ERROR_SUCCESS)
         {
-            throw new Exception($"Failed to query display configuration. Error code: {result}");
+            throw new InvalidOperationException($"Failed to query display configuration. Error code: {result}");
         }
 
         // Create list of display information
@@ -88,7 +103,7 @@ internal static class HDRController
                 header = new DISPLAYCONFIG_DEVICE_INFO_HEADER
                 {
                     type = DisplayConfigConstants.DISPLAYCONFIG_DEVICE_INFO_GET_TARGET_NAME,
-                    size = (uint)Marshal.SizeOf(typeof(DISPLAYCONFIG_TARGET_DEVICE_NAME)),
+                    size = (uint)Marshal.SizeOf<DISPLAYCONFIG_TARGET_DEVICE_NAME>(), // Updated to use generic overload
                     adapterId = pathInfoArray[i].targetInfo.adapterId,
                     id = pathInfoArray[i].targetInfo.id
                 }
@@ -106,7 +121,7 @@ internal static class HDRController
                 header = new DISPLAYCONFIG_DEVICE_INFO_HEADER
                 {
                     type = DisplayConfigConstants.DISPLAYCONFIG_DEVICE_INFO_GET_ADVANCED_COLOR_INFO,
-                    size = (uint)Marshal.SizeOf(typeof(DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO)),
+                    size = (uint)Marshal.SizeOf<DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO>(), // Updated to use generic overload
                     adapterId = pathInfoArray[i].targetInfo.adapterId,
                     id = pathInfoArray[i].targetInfo.id
                 }
@@ -115,9 +130,9 @@ internal static class HDRController
             result = DisplayConfig.DisplayConfigGetDeviceInfo(ref getAdvancedColorInfo);
             if (result == DisplayConfigConstants.ERROR_SUCCESS)
             {
-                displayInfo.SupportsHDR = (getAdvancedColorInfo.value 
+                displayInfo.SupportsHDR = (getAdvancedColorInfo.value
                     & (uint)DisplayConfigGetAdvancedColorInfoValue.AdvancedColorSupported) != 0;
-                displayInfo.IsHDREnabled = (getAdvancedColorInfo.value 
+                displayInfo.IsHDREnabled = (getAdvancedColorInfo.value
                     & (uint)DisplayConfigGetAdvancedColorInfoValue.AdvancedColorEnabled) != 0;
             }
 

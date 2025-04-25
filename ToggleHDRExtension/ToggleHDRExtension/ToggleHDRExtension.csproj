@@ -47,6 +47,9 @@
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="Shmuelie.WinRTServer" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pages\" />
+  </ItemGroup>
 
   <!--
     Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution

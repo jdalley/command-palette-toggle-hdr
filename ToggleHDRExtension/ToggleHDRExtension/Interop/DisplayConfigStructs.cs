@@ -8,12 +8,13 @@ public struct LUID
     public uint LowPart;
     public int HighPart;
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
-        if (!(obj is LUID))
+        if (obj is not LUID other)
+        {
             return false;
+        }
 
-        var other = (LUID)obj;
         return LowPart == other.LowPart && HighPart == other.HighPart;
     }
 
@@ -21,10 +22,20 @@ public struct LUID
     {
         return LowPart.GetHashCode() ^ HighPart.GetHashCode();
     }
+
+    public static bool operator ==(LUID left, LUID right)
+    {
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(LUID left, LUID right)
+    {
+        return !(left == right);
+    }
 }
 
 [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-public struct DISPLAYCONFIG_TARGET_DEVICE_NAME
+public struct DISPLAYCONFIG_TARGET_DEVICE_NAME // Fix for IDE0251: Mark struct as readonly
 {
     public DISPLAYCONFIG_DEVICE_INFO_HEADER header;
     public uint flags;

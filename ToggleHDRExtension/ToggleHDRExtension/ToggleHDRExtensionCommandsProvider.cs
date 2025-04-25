@@ -4,25 +4,46 @@
 
 using Microsoft.CommandPalette.Extensions;
 using Microsoft.CommandPalette.Extensions.Toolkit;
+using System.Collections.Generic;
+using System.Linq;
+using ToggleHDRExtension.Commands;
+using ToggleHDRExtension.Interop;
 
 namespace ToggleHDRExtension;
 
 public partial class ToggleHDRExtensionCommandsProvider : CommandProvider
 {
-    private readonly ICommandItem[] _commands;
-
     public ToggleHDRExtensionCommandsProvider()
     {
         DisplayName = "Toggle HDR";
-        Icon = IconHelpers.FromRelativePath("Assets\\StoreLogo.png");
-        _commands = [
-            new CommandItem(new ToggleHDRExtensionPage()) { Title = DisplayName },
-        ];
+        Icon = new("\uf19e"); // ToggleLeft
     }
 
     public override ICommandItem[] TopLevelCommands()
     {
-        return _commands;
-    }
+        var displays = HDRController.GetDisplays();
 
+        // Check if any display supports HDR
+        bool anyDisplaySupportsHDR = displays.Any(display => display.SupportsHDR);
+        if (!anyDisplaySupportsHDR)
+        {
+            var showMessageCommand = new MessageOnlyCommand("Toggle HDR - No displays support HDR");
+            return
+            [
+                new ListItem(showMessageCommand),
+            ];
+           
+        }
+
+        // Create a ToggleHDRCommand for each display
+        var displayCommands = new List<ListItem>();
+        for (int i = 0; i < displays.Count; i++)
+        {
+            var display = displays[i];
+            var command = new ToggleHDRCommand(i, display);
+            displayCommands.Add(new ListItem(command));
+        }
+
+        return [.. displayCommands];
+    }
 }
