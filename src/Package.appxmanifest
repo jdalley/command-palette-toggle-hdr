@@ -10,14 +10,12 @@
 
   <Identity
     Name="ToggleHDRExtension"
-    Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+    Publisher="CN=Jeff Dalley, O=Jeff Dalley, L=Pasadena, S=California, C=US"
     Version="0.0.1.0" />
-  <!-- When you're ready to publish your extension, you'll need to change the
-       Publisher= to match your own identity -->
 
   <Properties>
     <DisplayName>Toggle HDR</DisplayName>
-    <PublisherDisplayName>Jeff Dalley</PublisherDisplayName>
+    <PublisherDisplayName>jdalley</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -35,8 +33,8 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="Toggle HDR"
-        Description="Toggle HDR for individual displays"
+        DisplayName="Toggle HDR Extension for Command Palette"
+        Description="Toggle HDR for individual displays in Windows Command Palette"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">
@@ -55,8 +53,8 @@
           <uap3:AppExtension Name="com.microsoft.commandpalette"
             Id="ID"
             PublicFolder="Public"
-            DisplayName="Toggle HDR"
-            Description="Toggle HDR">
+            DisplayName="Toggle HDR Extension for Command Palette"
+            Description="Toggle HDR for individual displays in Windows Command Palette">
             <uap3:Properties>
               <CmdPalProvider>
                 <Activation>
