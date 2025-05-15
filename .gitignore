@@ -55,4 +55,9 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# VS User Files
 /src/ToggleHDRExtension.csproj.user
+
+# App Package Files
+/src/Package.StoreAssociation.xml
