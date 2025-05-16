@@ -103,7 +103,7 @@ internal static class HDRController
                 header = new DISPLAYCONFIG_DEVICE_INFO_HEADER
                 {
                     type = DisplayConfigConstants.DISPLAYCONFIG_DEVICE_INFO_GET_TARGET_NAME,
-                    size = (uint)Marshal.SizeOf<DISPLAYCONFIG_TARGET_DEVICE_NAME>(), // Updated to use generic overload
+                    size = (uint)Marshal.SizeOf<DISPLAYCONFIG_TARGET_DEVICE_NAME>(),
                     adapterId = pathInfoArray[i].targetInfo.adapterId,
                     id = pathInfoArray[i].targetInfo.id
                 }
@@ -121,7 +121,7 @@ internal static class HDRController
                 header = new DISPLAYCONFIG_DEVICE_INFO_HEADER
                 {
                     type = DisplayConfigConstants.DISPLAYCONFIG_DEVICE_INFO_GET_ADVANCED_COLOR_INFO,
-                    size = (uint)Marshal.SizeOf<DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO>(), // Updated to use generic overload
+                    size = (uint)Marshal.SizeOf<DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO>(),
                     adapterId = pathInfoArray[i].targetInfo.adapterId,
                     id = pathInfoArray[i].targetInfo.id
                 }
