@@ -61,3 +61,6 @@ nunit-*.xml
 
 # App Package Files
 /src/Package.StoreAssociation.xml
+
+# Custom/Local
+releases/
