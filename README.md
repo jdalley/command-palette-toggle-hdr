@@ -4,6 +4,28 @@ This is an extension for Microsoft PowerToys' Command Palette tool (CmdPal). It 
 
 https://learn.microsoft.com/en-us/windows/powertoys/command-palette
 
+## Installation
+
+### Command Palette
+
+You can install the extension directly from Command Palette by running the `Install Command Palette extensions` item, then searching by extension name.
+
+### Winget
+
+[![WinGet Package Version](https://img.shields.io/winget/v/jdalley.ToggleHDRforCommandPalette)](https://winstall.app/apps/jdalley.ToggleHDRforCommandPalette)
+
+You can install the extension using [Winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/) with the following command:
+```
+winget install --id=jdalley.ToggleHDRforCommandPalette  -e
+```
+
+### Windows Store
+
+It can also be installed directly from the Windows Store:
+
+[![Microsoft](https://get.microsoft.com/images/en-us%20dark.svg)](https://apps.microsoft.com/detail/9pl3dp61zjtn)
+
+
 ## How To Use
 
 After installing the extension, opening CmdPal, and starting to type "toggle" you will see one of two things:
