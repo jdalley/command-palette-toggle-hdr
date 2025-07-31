@@ -11,7 +11,7 @@
   <Identity
     Name="jdalley.ToggleHDRExtensionforCommandPalette"
     Publisher="CN=ED1C47EF-378C-4CB4-AADF-3E2467B4E0BF"
-    Version="0.0.1.0" />
+    Version="1.0.0.0" />
 
   <Properties>
     <DisplayName>Toggle HDR Extension for Command Palette</DisplayName>
