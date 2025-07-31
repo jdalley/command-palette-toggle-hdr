@@ -2,7 +2,7 @@
 # yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.10.0.schema.json
 
 PackageIdentifier: jdalley.ToggleHDRforCommandPalette
-PackageVersion: v1.0.0
+PackageVersion: 1.0.0
 PackageLocale: en-US
 Publisher: jdalley
 PublisherUrl: https://github.com/jdalley
@@ -13,5 +13,9 @@ License: MIT License
 ShortDescription: Toggle HDR for individual displays in Windows Command Palette
 Tags:
 - windows-commandpalette-extension
+ReleaseNotesUrl: https://github.com/jdalley/command-palette-toggle-hdr/releases/tag/v1.0.0
+Documentations:
+- DocumentLabel: Wiki
+  DocumentUrl: https://github.com/jdalley/command-palette-toggle-hdr/wiki
 ManifestType: defaultLocale
 ManifestVersion: 1.10.0
